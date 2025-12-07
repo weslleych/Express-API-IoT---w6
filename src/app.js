@@ -1,14 +1,10 @@
 import "dotenv/config";
 import express from 'express'
 import getData from './get-data.js'
-
+import decoder from "./decoder.js";
 
 const app = express()
 const port = 3000
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.get('/data', async (req, res) => {
     const data = await getData()
@@ -17,6 +13,11 @@ app.get('/data', async (req, res) => {
         response.push(data[i]);
     }
     res.send(response)
+})
+
+app.get('/hexData', async (req, res) => {
+  const decodedValues = await decoder();
+  res.send(decodedValues)
 })
 
 app.post('/visualize', async (req, res) => {
